@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokéDex — Catálogo Completo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style/pokedex.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">Poké<span>DEX</span></div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showPage('catalog',this)">📖 Catálogo</button>
+    <button class="tab-btn"        onclick="showPage('team',this)">⚔️ Monte seu Time</button>
+  </div>
+</header>
+
+<!-- Barra de info do hover (sticky bottom) -->
+<div class="hover-info-bar" id="hoverBar">
+  <span class="hover-info-pokemon" id="hoverName">—</span>
+  <span class="sep">|</span>
+  <span id="hoverX4Row" style="display:none;align-items:center;gap:6px">
+    <span class="hover-info-4x">⚡ 4×:</span>
+    <span class="hover-info-4x" id="hoverX4">—</span>
+    <span class="sep">|</span>
+  </span>
+  <span class="hover-info-strong">🟢 2×:</span>
+  <span class="hover-info-strong" id="hoverStrong">—</span>
+  <span class="sep">|</span>
+  <span class="hover-info-weak">⚫ Resiste:</span>
+  <span class="hover-info-weak" id="hoverWeak">—</span>
+  <span style="margin-left:auto;color:var(--muted);font-size:11px">Passe o mouse sobre um Pokémon</span>
+</div>
+
+<!-- Painel de detalhes -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetailPanel()"></div>
+<div class="detail-panel"   id="detailPanel"></div>
+
+<main>
+
+  <!-- ═══ CATÁLOGO ═══ -->
+  <div class="page active" id="page-catalog">
+
+    <!-- Filtro de geração -->
+    <div class="gen-filter">
+      <span class="gen-filter-label">Geração:</span>
+      <button class="gen-btn active" onclick="filterGen(0,this)">Todas</button>
+      <button class="gen-btn"        onclick="filterGen(1,this)">Kanto</button>
+      <button class="gen-btn"        onclick="filterGen(2,this)">Johto</button>
+      <button class="gen-btn"        onclick="filterGen(3,this)">Hoenn</button>
+      <button class="gen-btn"        onclick="filterGen(4,this)">Sinnoh</button>
+      <button class="gen-btn"        onclick="filterGen(5,this)">Unova</button>
+      <button class="gen-btn"        onclick="filterGen(6,this)">Kalos</button>
+      <button class="gen-btn"        onclick="filterGen(7,this)">Alola</button>
+      <button class="gen-btn"        onclick="filterGen(8,this)">Galar</button>
+      <button class="gen-btn"        onclick="filterGen(9,this)">Paldea</button>
+    </div>
+
+    <!-- Filtro de tipo (botões adicionados pelo JS) -->
+    <div class="type-filter-row">
+      <span class="type-filter-label">Tipo:</span>
+      <button class="type-filter-btn active"
+              style="background:var(--surface2);border-color:var(--border);color:var(--text);opacity:1"
+              onclick="filterType('',this)">Todos</button>
+    </div>
+
+    <!-- Filtro de categoria (botões adicionados pelo JS) -->
+    <div class="cat-filter-row"></div>
+
+    <!-- Busca + Ordenação -->
+    <div class="search-sort-row">
+      <div class="catalog-search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="catalog-search-input" type="text"
+               placeholder="Buscar por nome, número ou tipo..."
+               oninput="onCatalogSearch(this.value)">
+      </div>
+      <div class="sort-row-wrap">
+        <span class="sort-label">Ordenar:</span>
+        <div class="sort-row"></div><!-- botões adicionados pelo JS -->
+      </div>
+    </div>
+
+    <div id="catalog-container"></div>
+  </div>
+
+
+  <!-- ═══ MONTADOR DE TIME ═══ -->
+  <div class="page" id="page-team">
+
+    <!-- Treinadores predefinidos -->
+    <div class="trainer-selector">
+      <h3>Times Predefinidos</h3>
+      <div class="trainer-gen-tabs" id="trainerGenTabs"></div>
+      <div class="trainer-list"     id="trainerList"></div>
+    </div>
+
+    <div class="team-builder-layout">
+      <!-- Esquerda: slots + busca -->
+      <div class="team-search-area">
+        <div class="team-slots" id="teamSlots"></div>
+        <div class="search-bar">
+          <input type="text" class="search-input" id="teamSearch"
+                 placeholder="🔍 Buscar Pokémon para adicionar..."
+                 oninput="renderTeamSearch()">
+        </div>
+        <div class="team-pokemon-mini-grid" id="teamSearchGrid"></div>
+      </div>
+
+      <!-- Direita: análise -->
+      <div class="analysis-panel" id="analysisPanel">
+        <h3>Análise do Time</h3>
+        <div id="analysisContent">
+          <div class="empty-team-msg">Monte um time para ver a análise!</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script type="module" src="/script/pokedex.js"></script>
+</body>
+</html>
